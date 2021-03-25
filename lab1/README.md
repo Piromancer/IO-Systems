@@ -32,9 +32,9 @@ sudo insmod Lab1.ko
 3. Запишите данные в символьное устройство
 
 ```
-echo "your-data1" /dev/var5
-echo "your-data2" /dev/var5
-echo "your-data3" /dev/var5
+echo "your-data1" > /dev/var5
+echo "your-data2" > /dev/var5
+echo "your-data3" > /dev/var5
 ```
 
 4. Прочитайте содержание файла /proc/var5 и убедитесь, что в нем содержаться корректные данные
