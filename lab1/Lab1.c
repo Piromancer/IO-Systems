@@ -16,8 +16,6 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Rozhnov Denis P3400 && Tarasenko Daniil P3400");
 MODULE_DESCRIPTION("Lab 1");
 
-void handle_command(char* input);
-const char* CHANGE_FILENAME =  "/change_filename ";
 static dev_t first;
 static struct cdev c_dev; 
 static struct class *cl;
@@ -85,9 +83,9 @@ static ssize_t proc_read(struct file *file, char __user * ubuf, size_t count, lo
 
   	for (i = 0; i < rv.idx; i++)
     		written += snprintf(&sarr[written], 512 - written, "%d word had %d letters\n", i+1, rv.data[i]);
-  	sarr[written] = 0;
-
-       	len = strlen(sarr);
+  	
+	sarr[written] = 0;
+    len = strlen(sarr);
   	if (*ppos > 0 || count < len) return 0;
   	if (copy_to_user(ubuf, sarr, len) != 0) return -EFAULT;
   	*ppos = len;
@@ -117,12 +115,8 @@ static ssize_t custom_write(struct file *f, const char __user *buf,  size_t len,
 	char* user_input = (char*)vmalloc(len * sizeof(char));
 	memcpy(user_input, buf, len * sizeof(char));
 	user_input[len] = 0;
-	if (*user_input == '/') {
-		handle_command(user_input);
-	} else {
-		int res = count_letters(user_input);
-		rv_append(res, &rv);
-	}
+	int res = count_letters(user_input);
+	rv_append(res, &rv);
 	*off += len;
   	return len;
 }
@@ -141,29 +135,6 @@ static struct file_operations device_operations =
   	.read = custom_read,
   	.write = custom_write
 };
-
-void handle_command(char* input){
-	int i = 0;
-	for (; i < 17; ++i) {
-		if (*input != CHANGE_FILENAME[i]) return;
-		input++;
-	}
-
-	while (*input == ' ') {
-		input++;
-	}
-
-	proc_remove(entry);
-
-	char* cur = input;
-	while(*cur != '\n') {
-		cur++;
-	} 
-	*cur = 0;
-	entry = proc_create(input, 0444, NULL, &fops);
-	printk(KERN_INFO "created new file '%s'\n", input);		
-}
-
  
 static int __init ch_drv_init(void)
 {
@@ -172,8 +143,8 @@ static int __init ch_drv_init(void)
 	rv = rv_init();
 
     	entry = proc_create("var5", 0444, NULL, &fops);
-    	if (alloc_chrdev_region(&first, 0, 1, "ch_dev") < 0) return -1;
-    	if ((cl = class_create(THIS_MODULE, "chardrv")) == NULL)
+    	if (alloc_chrdev_region(&first, 0, 1, "var5") < 0) return -1;
+    	if ((cl = class_create(THIS_MODULE, "var5")) == NULL)
 	{
 		unregister_chrdev_region(first, 1);
 		return -1;
