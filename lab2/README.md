@@ -32,18 +32,18 @@
 
 1. Вывод команды `sudo fdisk -l /dev/mydisk`:
 
-
+![image](https://user-images.githubusercontent.com/44932328/114097194-5f9df280-98c8-11eb-8f2f-efaa001c7107.png)
 
 2. Вывод команды `df -h` для проверки точек монтирования:
 
-
+![image](https://user-images.githubusercontent.com/44932328/114097245-70e6ff00-98c8-11eb-9722-6d3cae8c1189.png)
 
 3. Сообщения в кольцевом буфере:
 
-
+![image](https://user-images.githubusercontent.com/44932328/114097300-852afc00-98c8-11eb-9865-9b414d87721b.png)
 
 ## Профилирование
 
 Копирование между разделами виртуального диска (из mydisk1 в mydisk6) и копирование из реального диска в виртуальный диск (из /dev/sda/ в mysidk6) 
 
-
+![lab3](https://user-images.githubusercontent.com/44932328/114094421-f5d01980-98c4-11eb-9f66-a3c0bc1d92b0.png)
